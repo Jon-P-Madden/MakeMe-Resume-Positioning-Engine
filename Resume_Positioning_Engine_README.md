@@ -1,12 +1,14 @@
-# Resume Positioning Engine
+# Make Me! Resume Positioning Engine
 
-**Resume Positioning Engine** is an AI-powered career positioning tool that helps candidates turn raw work history into a strategically targeted resume — built for any role, any industry, any level.
+**Make Me! Resume Positioning Engine** is an AI-powered career positioning tool that helps candidates turn raw work history into a strategically targeted resume — built for any role, any industry, any level.
+
+Part of the **Make Me!** career tools suite — built by a Senior Technical Program Manager to solve real job search problems with real AI integration.
 
 Most resume tools format. This one interprets.
 
 No installation. No backend. No friction.
 
-![Resume Positioning Engine](Screenshot.png)
+![Make Me! Resume Positioning Engine](Screenshot.png)
 
 ---
 
@@ -51,8 +53,8 @@ The intelligence layer is the differentiator — Claude infers what keywords ATS
 
 - **Single HTML file** — zero dependencies, zero deployment surface, runs in any browser
 - **Runtime API key input** — entered by user at runtime, never stored or persisted
-- **No backend or database** — fully client-side execution by design
-- **Five-step wizard UX** — structured intake prevents the "blank page" problem
+- **localStorage persistence** — profile saved after first-time setup, never re-entered
+- **Five-step wizard UX** — structured intake prevents the blank page problem
 
 These were deliberate decisions to maximize portability and ease of use. See Known Limitations for the production tradeoffs this implies.
 
@@ -60,14 +62,18 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 
 ## Features
 
+### First-Time Setup
+- One-time profile entry: name, contact, full work history, tools, compliance, certifications
+- Saved to localStorage — never asked again on return visits
+- Edit profile anytime via settings
+
 ### Step 1 — Target Role
 - Job title, industry, seniority level, work preference
 - Optional job description paste to boost keyword precision
 - AI inference fills keyword gaps even without a posting
 
 ### Step 2 — Career Intake
-- Structured experience entries: title, company, dates, duties, wins, environment
-- Tools, methodologies, compliance exposure, certifications
+- Pre-filled from saved profile
 - Tone selector: Executive, Technical, Balanced, ATS-Safe, Modern, Consulting
 
 ### Step 3 — AI Analysis
@@ -96,8 +102,12 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 │              Browser (Single HTML File)           │
 │                                                  │
 │  ┌─────────────────────────────────────────┐    │
-│  │  5-Step Guided Intake Wizard             │    │
-│  │  Target → Career → Analysis →           │    │
+│  │  First-Time Setup → localStorage Profile │    │
+│  └──────────────────┬──────────────────────┘    │
+│                     │                            │
+│  ┌──────────────────▼──────────────────────┐    │
+│  │  5-Step Guided Workflow                  │    │
+│  │  Target → Intake → Analysis →           │    │
 │  │  Refine → Generate                       │    │
 │  └──────────────────┬──────────────────────┘    │
 │                     │                            │
@@ -115,8 +125,8 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 ```
 
 **Two-pass AI approach:**
-- **Pass 1 (Analysis):** Returns structured JSON — keywords across four categories, positioning themes, gap analysis, headline suggestion
-- **Pass 2 (Generation):** Returns semantic HTML — complete resume with tailored summary, competencies, and rewritten bullets
+- **Pass 1 (Analysis):** Returns structured JSON — keywords, positioning themes, gap analysis, headline
+- **Pass 2 (Generation):** Returns semantic HTML — complete resume with summary, competencies, rewritten bullets
 
 ---
 
@@ -126,7 +136,8 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 2. Open `Resume_Positioning_Engine.html` in any modern browser — Chrome recommended
 3. Get an [Anthropic API key](https://console.anthropic.com/)
 4. Paste your API key in the header — the dot turns green when valid
-5. Follow the five-step guided flow
+5. Complete the one-time profile setup
+6. Follow the five-step guided flow for each application
 
 **No installation. No build step. No server.**
 
@@ -135,7 +146,7 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 ## Known Limitations
 
 - **Client-side API calls** — requests are made directly from the browser. Deliberate prototype decision. In production, calls would be proxied through a backend service.
-- **No persistent profiles** — session data is not saved between uses. A production version would support saved profiles and resume versioning.
+- **localStorage profile** — saved locally in the browser. Clearing browser data will clear the profile. A production version would support cloud-synced profiles.
 - **Output parsing** — JSON extraction uses first/last brace matching, reliable with structured model output but would benefit from schema validation in production.
 - **Single-file architecture** — intentional for portability, but a production system would separate concerns into modules.
 
@@ -152,27 +163,25 @@ These were deliberate decisions to maximize portability and ease of use. See Kno
 ## Roadmap
 
 **Phase 2 — Multi-Version Output**
-Generate multiple resume versions from one intake: Executive, Technical, ATS-Safe. Same data, different positioning voice.
+Generate Executive, Technical, and ATS-Safe resume versions from one intake session.
 
 **Phase 3 — LinkedIn Summary Generator**
 Output a tailored LinkedIn "About" section alongside the resume.
 
 **Phase 4 — Interview Prep Mode**
-Generate likely interview questions based on the resume and target role, with suggested talking points tied to specific experience entries.
+Generate likely interview questions and talking points based on the resume and target role.
 
 **Phase 5 — Suite Integration**
-Feed the positioned resume directly into the TPM Application Engine for job-specific tailoring and application tracking.
+Feed the positioned resume directly into the Application Engine for job-specific tailoring.
 
 ---
 
-## Part of the Career Tools Suite
-
-This tool is **Engine 1** in a two-engine career tools suite:
+## Part of the Make Me! Suite
 
 | Engine | Tool | Purpose |
 |--------|------|---------|
-| Engine 1 | **Resume Positioning Engine** | Build a strategically positioned resume from scratch |
-| Engine 2 | **[TPM Application Engine](https://github.com/Jon-P-Madden/tpm-application-engine)** | Analyze job postings, tailor existing resumes, track applications |
+| Engine 1 | **Make Me! Resume Positioning Engine** | Build a strategically positioned resume from scratch |
+| Engine 2 | **[Make Me! Application Engine](https://github.com/Jon-P-Madden/application-engine)** | Analyze job postings, tailor existing resumes, track applications |
 
 Use Engine 1 to build your positioning. Use Engine 2 to apply it.
 
@@ -182,12 +191,11 @@ Use Engine 1 to build your positioning. Use Engine 2 to apply it.
 
 This tool is not a resume formatter.
 
-It demonstrates how to build a workflow around a real, underserved problem: most candidates don't know how to translate raw experience into targeted positioning. The gap is not effort — it's interpretation.
+It demonstrates how to build a workflow around a real, underserved problem: most candidates don't know how to translate raw experience into targeted positioning.
 
-This project demonstrates:
 - **Intake design** — structured questions that surface signal, not just data entry
 - **AI as interpreter** — Claude used to classify and reframe, not just generate
-- **Workflow thinking** — five deliberate steps that mirror how a career strategist actually works
+- **Workflow thinking** — five deliberate steps that mirror how a career strategist works
 - **Constraint-driven architecture** — single-file, no-backend, maximum portability
 
 ---
@@ -198,5 +206,5 @@ MIT — use it, fork it, adapt it.
 
 ---
 
-*Built by Jonathan Madden — Senior Technical Program Manager*
+*Built by Jonathan Madden*
 *[LinkedIn](https://linkedin.com/in/jonathan-p-madden) · [github.com/Jon-P-Madden](https://github.com/Jon-P-Madden)*
